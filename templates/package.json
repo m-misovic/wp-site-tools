@@ -1,0 +1,52 @@
+{
+	"name": "{{SITE}}-build-tools",
+	"version": "1.0.0",
+	"description": "Build tools for the site's own block plugins (npm workspaces)",
+	"author": "{{AUTHOR}}",
+	"scripts": {
+		"packages-update": "wp-scripts packages-update",
+		"build": "npm run build --workspaces"
+	},
+	"eslintConfig": {
+		"extends": "plugin:@wordpress/eslint-plugin/recommended-with-formatting",
+		"ignorePatterns": [
+			"build"
+		],
+		"globals": {
+			"wp": "readonly"
+		},
+		"env": {
+			"jquery": true,
+			"browser": true,
+			"node": true
+		},
+		"rules": {
+			"no-console": "warn",
+			"no-alert": "warn",
+			"no-unused-vars": "warn"
+		}
+	},
+	"stylelint": {
+		"extends": "@wordpress/stylelint-config/scss",
+		"ignoreFiles": [
+			"**/build/**/*.css"
+		],
+		"rules": {
+			"at-rule-empty-line-before": null,
+			"at-rule-no-unknown": null,
+			"font-weight-notation": null,
+			"no-descending-specificity": null,
+			"selector-class-pattern": null,
+			"value-keyword-case": null,
+			"selector-id-pattern": null,
+			"block-no-empty": null,
+			"no-invalid-position-at-import-rule": null
+		}
+	},
+	"dependencies": {
+		"@wordpress/scripts": "^32.4.0"
+	},
+	"workspaces": [
+		"{{WORKSPACES: one wp-content/plugins/<folder> per plugin with a package.json build}}"
+	]
+}

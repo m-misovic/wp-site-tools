@@ -1,0 +1,59 @@
+# Always ignore
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+
+# Ignore any node_modules folders
+node_modules
+
+# Ignore pattern - Do not remove anything here
+/*
+!/wp-content
+/wp-content/*
+!/wp-content/plugins
+/wp-content/plugins/*
+!/wp-content/mu-plugins
+/wp-content/mu-plugins/*
+!/wp-content/themes
+/wp-content/themes/*
+!/wp-content/languages
+/wp-content/languages/*
+!/wp-content/languages/plugins
+/wp-content/languages/plugins/*
+!/wp-content/languages/themes
+/wp-content/languages/themes/*
+!/wp-content/languages/library
+/wp-content/languages/library/*
+!/tests/
+!/tools/
+# tools is a submodule: Git sees it as one entry, which "!/tools/" (folders only) misses
+!/tools
+!/hosting/
+!/docs/
+!/.github/
+
+# Root files to include after ignore
+!.editorconfig
+!.gitattributes
+!.gitignore
+!.gitmodules
+!AGENTS.md
+!CLAUDE.md
+!index.php
+!package-lock.json
+!package.json
+!README.md
+!robots.txt
+
+# Plugins to include - the site's own code only, never a third-party plugin
+{{PLUGIN_LINES: one "!/wp-content/plugins/<folder>" per custom plugin, or a prefix such as "!/wp-content/plugins/mybrand*"}}
+
+# Themes to include
+{{THEME_LINES: e.g. "!/wp-content/themes/mybrand*"}}
+
+# Must-use plugins to include
+!/wp-content/mu-plugins/staging-guard.php
+
+# Build folders - never in Git; tools/package.php and the deploy rebuild them
+{{BUILD_LINES: one "/wp-content/plugins/<folder>/build/" per plugin with a build step, or "/wp-content/plugins/mybrand*/build/"}}

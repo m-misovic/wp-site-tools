@@ -1,0 +1,21 @@
+# The site's own values for wp-site-tools. Copy to hosting/site.conf in the site repository.
+# bash sources this file (the deploy workflow and tools/pull-db.sh): plain KEY=value lines.
+#
+# Write the production domain split in two ("example"".com"): Hostinger's staging tool
+# rewrites the production domain inside every file it copies.
+
+# Production's domain, and the local site's domain in Local (served over https).
+PROD_HOST="example"".com"
+LOCAL_HOST=example.local
+
+# Server paths of the WordPress roots the deploy workflow syncs to (branch main / staging).
+PROD_ROOT=/home/u000000000/domains/example.com/public_html
+STAGING_ROOT=/home/u000000000/domains/example.com/public_html/dev
+
+# Host alias in ~/.ssh/config that tools/pull-db.sh reads production through.
+SSH_ALIAS=example-prod
+
+# Optional: the query tools/pull-db.sh shows when it is done ({prefix} = table prefix),
+# and a line it prints after it.
+PULL_DB_SUMMARY="SELECT COUNT(*) AS products FROM {prefix}posts WHERE post_type = 'product' AND post_status = 'publish'"
+PULL_DB_REMINDER=
