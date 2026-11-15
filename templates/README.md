@@ -73,7 +73,7 @@ Set up `hosting/local/uploads-proxy.conf` as [hosting/README.md](hosting/README.
 
 ### 7. Check
 - `https://{{LOCAL_HOST}}` opens and the main pages work.
-- The toolbar shows **STAGING COPY**: the staging guard is active, production-only plugins are not loaded, e-mail goes to Local's Mailpit and the site is noindex.
+- The toolbar shows **STAGING COPY**: the staging guard is active, production-only plugins are not loaded, e-mail goes to Local's Mailpit, WooCommerce sends no app notifications or webhooks and the site is noindex.
 
 ## Notes
 - To refresh the clone later, repeat steps 5 and 6.

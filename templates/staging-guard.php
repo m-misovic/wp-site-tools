@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Staging Guard
- * Description: Keeps copies of the site from acting like production: no e-mail, no production-only plugins, hidden from search engines.
- * Version: 1.0.0
+ * Description: Keeps copies of the site from acting like production: no e-mail, no production-only plugins, no app notifications or webhooks, hidden from search engines.
+ * Version: 1.1.0
  * Author: {{AUTHOR}}
  *
  * A copy of the site (staging, a local clone, a host's one-click copy) carries production's
@@ -42,6 +42,14 @@ if ( ! mail_goes_to_mailpit() ) {
 
 add_filter( 'option_active_plugins', __NAMESPACE__ . '\without_production_only_plugins', PHP_INT_MAX );
 add_filter( 'pre_option_blog_public', '__return_zero', PHP_INT_MAX );
+
+// WooCommerce itself sends push notifications to the Woo app through WordPress.com, on the
+// site connection the copy carries in its database, so test orders on a copy reach the
+// owner's phone as real ones. Webhooks in the database (e.g. a third-party store app) would
+// get the copy's orders too. Both filters do nothing on a site without WooCommerce.
+add_filter( 'woocommerce_enhanced_push_notifications_disabled', '__return_true', PHP_INT_MAX );
+add_filter( 'woocommerce_webhook_should_deliver', '__return_false', PHP_INT_MAX );
+
 add_action( 'admin_notices', __NAMESPACE__ . '\notice' );
 add_action( 'admin_bar_menu', __NAMESPACE__ . '\admin_bar_node', 100 );
 
@@ -118,6 +126,7 @@ function summary(): string {
 	if ( blocked_plugins() ) {
 		$parts[] = 'not loaded: ' . implode( ', ', blocked_plugins() );
 	}
+	$parts[] = 'no app notifications or webhooks';
 	$parts[] = 'hidden from search engines';
 
 	return 'Staging guard (' . wp_parse_url( home_url(), PHP_URL_HOST ) . '): ' . implode( '; ', $parts ) . '.';
